@@ -10,15 +10,14 @@ import java.util.stream.Stream;
 public class Solution{
     public static void main(String[] args)
     {
-        String[] test_cases = new String[0];
-
         try {
-            test_cases = get_cases("src/TagContentExtractor/input02.txt");
+            String[] test_cases = get_cases("src/TagContentExtractor/input02.txt");
+            Stream.of(test_cases).forEach(line -> System.out.println(get_tag(line)));
         } catch (IOException ioException) {
-            System.out.println("Error processing data: " + ioException.getLocalizedMessage());
+            System.out.println("Error reading data: " + ioException.getLocalizedMessage());
+        } catch (Exception exception) {
+            System.out.println("Error processing data: " + exception.getLocalizedMessage());
         }
-
-        Stream.of(test_cases).forEach(line -> System.out.println(get_tag(line)));
     }
 
     private static String[] get_cases(String file_name) throws IOException
