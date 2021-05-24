@@ -1,36 +1,41 @@
 package TagContentExtractor;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class Solution{
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args)
     {
-        ArrayList<String> test_cases = new ArrayList<>();
-        ArrayList<String> results = new ArrayList<>();
+        String[] test_cases = new String[0];
 
-        BufferedReader fileReader = new BufferedReader(new FileReader("input02.txt"));
+        try {
+            test_cases = get_cases("src/TagContentExtractor/input02.txt");
+        } catch (IOException ioException) {
+            System.out.println("Error processing data: " + ioException.getLocalizedMessage());
+        }
+
+        Stream.of(test_cases).forEach(line -> System.out.println(get_tag(line)));
+    }
+
+    private static String[] get_cases(String file_name) throws IOException
+    {
+        BufferedReader fileReader = new BufferedReader(new FileReader(file_name));
         int number_of_lines = Integer.parseInt(fileReader.readLine());
+
+        String[] test_cases = new String[number_of_lines];
 
         for (int index = 0; index < number_of_lines; index++)
         {
-            test_cases.add(fileReader.readLine());
+            test_cases[index] = (fileReader.readLine());
         }
 
         fileReader.close();
 
-        for (String line : test_cases)
-        {
-            System.out.println(line);
-//            results.add(get_tag(line));
-        }
+        return test_cases;
     }
 
     private static String get_tag(String line)
